@@ -1,0 +1,43 @@
+    {% comment %} {
+        "id": 1,
+        "client_name": "Пётр 'Безголовый' Головин",
+        "services": ["Стрижка под 'Горшок'", "Полировка лысины до блеска"],
+        "master_id": 1,
+        "date": "2025-03-20",
+        "status": STATUS_NEW,
+    } {% endcomment %}
+     
+    <!-- шаблон order_detail.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Заказ №{{ order.id }}</title>
+</head>
+<body>
+    <h1>Заказ №{{ order.id }}</h1>
+    <p>Клиент: {{ order.client_name }}</p>
+   
+    {% comment %} Ветвление для статуса {% endcomment %}
+
+    {% if order.status == "новая" %}
+    <p style="color: green;">Статус: новая</p>
+    {% elif order.status == "подтвержденная" %}
+    <p style="color: orange;">Статус: подтвержденная</p>
+    {% elif order.status == "отмененная" %}
+    <p style="color: gray;">Статус: отмененная</p>
+    {% else %}
+    <p style="color: gold;">Статус: выполненная</p>
+    {% endif %}
+
+    {% comment %} <p>Услуги: {{ order.services }} </p> {% endcomment %}
+    <ul>
+        {% for service in order.services %}
+        <li>{{ service }}</li>
+        {% endfor %}
+    </ul>
+    <p>Моя переменная {{ my_fariable }}</p>
+
+</body>
+</html>

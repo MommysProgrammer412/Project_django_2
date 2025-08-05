@@ -1,0 +1,165 @@
+:root {
+  --font-family-base: "Roboto", sans-serif;
+  --font-family-heading: "Playfair Display", serif;
+  --bs-body-font-family: var(--font-family-base);
+  --bs-primary: #8b4513;
+  --bs-secondary: #d2b48c;
+  --bs-light: #f5f5dc;
+  --bs-dark: #322c2b;
+  --bs-white: #ffffff;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: #f5f5f5;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 20px;
+}
+
+.flex-card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 300px;
+  transition: transform 0.3s ease;
+}
+
+.flex-card:hover {
+  transform: translateY(-5px);
+}
+
+.flex-card h2 {
+  margin-top: 0;
+  color: #2c3e50;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.flex-card p {
+  margin: 10px 0;
+}
+
+.services {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 15px;
+}
+
+.service {
+  background-color: #e0f7fa;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.9em;
+}
+
+/* Стили для статусов */
+.new {
+  color: #27ae60; /* Green */
+  font-weight: bold;
+}
+
+.confirmed {
+  color: #2980b9; /* Blue */
+  font-weight: bold;
+}
+
+.completed {
+  color: #8e44ad; /* Purple */
+  font-weight: bold;
+}
+
+.canceled {
+  color: #e74c3c; /* Red */
+  font-weight: bold;
+}
+
+/* Стили для формы поиска */
+.search-form {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: stretch; /* Выравниваем элементы по высоте */
+}
+
+.search-form fieldset {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 15px;
+  margin: 0;
+  min-width: 200px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.search-form .fieldset-highlight {
+  border-color: #2980b9 !important; /* Используем !important для гарантии применения */
+  border-width: 2px;
+}
+
+.search-form legend {
+  font-weight: bold;
+  color: #333;
+  padding: 0 5px;
+}
+
+.search-form input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.search-form .options label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: normal;
+}
+
+.search-form .options input {
+  margin-right: 5px;
+}
+
+.search-form button {
+  background-color: #2980b9;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  align-self: center;
+  height: fit-content;
+}
+
+.search-form button:hover {
+  background-color: #3498db;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-family-heading);
+}
+
+.footer {
+    background-color: var(--bs-dark);
+}

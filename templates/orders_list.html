@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}   
+<h1>Список заявок</h1>
+
+<form action="" method="get" class="search-form">
+    <fieldset class="fieldset-highlight">
+        <legend>Поиск</legend>
+        <input type="text" name="q" placeholder="Поиск по заявке" value="{{ request.GET.q }}">
+    </fieldset>
+
+    <fieldset class="options">
+        <legend>Условия выборки</legend>
+        <label><input type="checkbox" name="search_by_phone" {% if request.GET.search_by_phone or 'q' not in request.GET %}checked{% endif %}> По телефону</label>
+        <label><input type="checkbox" name="search_by_name" {% if request.GET.search_by_name %}checked{% endif %}> По имени</label>
+        <label><input type="checkbox" name="search_by_comment" {% if request.GET.search_by_comment %}checked{% endif %}> По тексту комментария</label>
+    </fieldset>
+
+    <fieldset class="options">
+        <legend>Статусы заявок</legend>
+        <label><input type="checkbox" name="status_new" {% if request.GET.status_new or 'q' not in request.GET %}checked{% endif %}> Новая</label>
+        <label><input type="checkbox" name="status_confirmed" {% if request.GET.status_confirmed %}checked{% endif %}> Подтвержденная</label>
+        <label><input type="checkbox" name="status_completed" {% if request.GET.status_completed %}checked{% endif %}> Завершена</label>
+        <label><input type="checkbox" name="status_canceled" {% if request.GET.status_canceled %}checked{% endif %}> Отменена</label>
+    </fieldset>
+
+    <fieldset class="options">
+        <legend>Порядок сортировки</legend>
+        <label><input type="radio" name="order_by_date" value="desc" {% if request.GET.order_by_date == 'desc' or 'q' not in request.GET %}checked{% endif %}> По убыванию даты</label>
+        <label><input type="radio" name="order_by_date" value="asc" {% if request.GET.order_by_date == 'asc' %}checked{% endif %}> По возрастанию даты</label>
+    </fieldset>
+
+    <button type="submit">Найти</button>
+</form>
+
+
+    <div class="flex-container">
+        {% comment %} Проверка на пустую коллекцию empty{% endcomment %}
+        {% for order in orders %}
+        {% include "include_order_card.html" %}
+        {% endfor %}
+    </div>
+{% endblock content %} 
