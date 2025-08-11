@@ -12,7 +12,8 @@ def landing(request):
     """
     Отвечает за маршрут '/'
     """
-    masters = Master.objects.all()
+    masters = Master.objects.prefetch_related("services").all()
+
     services = Service.objects.all()
     # reviews = Review.objects.all()  # Модель Review еще не создана
 
@@ -88,7 +89,7 @@ def orders_list(request):
 
     # 3. Объединяем два Q-объекта через И (&)
     # Это гарантирует, что запись должна соответствовать И условиям поиска, И условиям статуса
-    orders = Order.objects.filter(search_q & status_q).order_by(ordering)
+    orders = Order.objects.prefetch_related("services").select_related("master").filter(search_q & status_q).order_by(ordering)
 
     context = {"orders": orders}
 
