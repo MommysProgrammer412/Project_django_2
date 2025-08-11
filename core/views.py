@@ -102,7 +102,7 @@ def order_detail(request, order_id):
     :param request: HttpRequest
     :param order_id: int (номер заказа)
     """
-    order = Order.objects.prefetch_related("services").select_related("master").get(id=order_id)
+    order = Order.objects.prefetch_related("services").select_related("master").annotate(total_price=Sum('services__price')).get(id=order_id)
 
     context = {"order": order}
     return render(request, "order_detail.html", context=context)
