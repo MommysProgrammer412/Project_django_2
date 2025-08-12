@@ -3,7 +3,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.http import JsonResponse
 from django.contrib import messages
 from .data import orders
-from .models import Order, Master, Service
+from .models import Order, Master, Service, Review  # Модель Review еще не создана
 from .forms import OrderForm
 from django.db.models import Q, Count, Sum
 
@@ -13,14 +13,15 @@ def landing(request):
     Отвечает за маршрут '/'
     """
     masters = Master.objects.prefetch_related('services').annotate(num_services=Count('services'))
-
     services = Service.objects.all()
-    # reviews = Review.objects.all()  # Модель Review еще не создана
-
+    
+    # Если у вас есть модель Review, раскомментируйте и измените эту строку:
+    reviews = Review.objects.select_related('master').filter(is_published=True)[:3]
+    
     context = {
         "masters": masters,
         "services": services,
-        # "reviews": reviews,
+        "reviews": reviews,  # Не забудьте раскомментировать эту строку
     }
     return render(request, "landing.html", context=context)
 

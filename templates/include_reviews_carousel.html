@@ -1,51 +1,40 @@
-<div id="reviewsCarousel" class="carousel slide" data-bs-ride="false" data-bs-interval="5000">
-  <div class="carousel-indicators">
-    <button type="button" data-bs-target="#reviewsCarousel" data-bs-slide-to="0" class="active" aria-current="true"></button>
-    <button type="button" data-bs-target="#reviewsCarousel" data-bs-slide-to="1"></button>
-    <button type="button" data-bs-target="#reviewsCarousel" data-bs-slide-to="2"></button>
-  </div>
-  
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <div class="text-center py-4">
-        <blockquote class="blockquote mb-4">
-          <p class="fs-5 fst-italic text-white">"Отличный сервис! Мастер сделал все на высшем уровне. Настоящие профессионалы своего дела."</p>
-        </blockquote>
-        <footer class="blockquote-footer">
-          <cite class="text-white-50">Иван Петров, 15 июня 2025</cite>
-        </footer>
-      </div>
+<div id="reviewsCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        {% for review in reviews %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                <div class="card border-0 bg-transparent text-white">
+                    <div class="card-body text-center">
+                        <p class="lead mb-4">{{ review.text }}</p>
+                        <div class="d-flex justify-content-center mb-3">
+                            {% for i in "12345" %}
+                                <i class="bi bi-star-fill {% if forloop.counter <= review.rating %}text-warning{% else %}text-muted{% endif %} mx-1"></i>
+                            {% endfor %}
+                        </div>
+                        <h5 class="card-title mb-0">{{ review.name }}</h5>
+                        {% if review.master %}
+                            <p class="small">Мастер: {{ review.master.name }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="carousel-item active">
+                <div class="card border-0 bg-transparent text-white">
+                    <div class="card-body text-center">
+                        <p class="lead mb-4">У нас пока нет отзывов. Будьте первым!</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
     </div>
-    
-    <div class="carousel-item">
-      <div class="text-center py-4">
-        <blockquote class="blockquote mb-4">
-          <p class="fs-5 fst-italic text-white">"Лучший барбершоп в городе. Атмосфера и качество на высоте. Обязательно вернусь!"</p>
-        </blockquote>
-        <footer class="blockquote-footer">
-          <cite class="text-white-50">Сергей Сидоров, 10 июня 2025</cite>
-        </footer>
-      </div>
-    </div>
-    
-    <div class="carousel-item">
-      <div class="text-center py-4">
-        <blockquote class="blockquote mb-4">
-          <p class="fs-5 fst-italic text-white">"Классическое бритье опасной бритвой - просто восторг! Мастер - настоящий художник."</p>
-        </blockquote>
-        <footer class="blockquote-footer">
-          <cite class="text-white-50">Михаил Козлов, 5 июня 2025</cite>
-        </footer>
-      </div>
-    </div>
-  </div>
-  
-  <button class="carousel-control-prev" type="button" data-bs-target="#reviewsCarousel" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Предыдущий</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#reviewsCarousel" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Следующий</span>
-  </button>
+    {% if reviews|length > 1 %}
+        <button class="carousel-control-prev" type="button" data-bs-target="#reviewsCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Предыдущий</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#reviewsCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Следующий</span>
+        </button>
+    {% endif %}
 </div>

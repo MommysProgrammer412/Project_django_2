@@ -62,3 +62,30 @@ class Service(models.Model):
     class Meta:
         verbose_name = 'Услуга'
         verbose_name_plural = 'Услуги'
+
+class Review(models.Model):
+    name = models.CharField(max_length=100, verbose_name="Имя клиента")
+    text = models.TextField(verbose_name="Текст отзыва")
+    rating = models.PositiveSmallIntegerField(
+        verbose_name="Оценка", 
+        choices=[(i, str(i)) for i in range(1, 6)],  # Оценка от 1 до 5
+        default=5
+    )
+    date_created = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    is_published = models.BooleanField(default=True, verbose_name="Опубликован")
+    master = models.ForeignKey(
+        Master, 
+        on_delete=models.CASCADE, 
+        related_name='reviews',
+        verbose_name="Мастер",
+        null=True,
+        blank=True
+    )
+
+    def __str__(self):
+        return f"Отзыв от {self.name} - {self.rating}/5"
+    
+    class Meta:
+        verbose_name = 'Отзыв'
+        verbose_name_plural = 'Отзывы'
+        ordering = ['-date_created']  # Сортировка от новых к старым
