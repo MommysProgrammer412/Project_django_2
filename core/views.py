@@ -1,6 +1,6 @@
 # core/views.py
 from django.shortcuts import render, HttpResponse, redirect
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseNotAllowed
 from django.contrib import messages
 from .data import orders
 from .models import Order, Master, Service
@@ -128,3 +128,35 @@ def order_create(request):
 def services_list(request):
     services = Service.objects.all()
     return render(request, "services_list.html", {"services": services})
+
+def service_create(request):
+    if request.method == "GET":
+        context = {
+            'operation_type': 'Создание услуги',
+        }
+        return render(request, "service_form.html", context=context)
+    elif request.method == 'POST':
+        service_name = request.POST.get("service_name")
+        service_description = request.POST.get("service_description")
+        service_price = request.POST.get("service_price")
+
+        if service_name and service_description and service_price and service_price.isdigit():
+            service = Service.objects.create(
+                name=service_name,
+                description=service_description,
+                price=int(service_price)
+            )
+            service.save()
+            return redirect("services-list")
+        else:
+            messages.error(request, "Ошибка при создании услуги")
+            context = {
+                'operation_type': 'Создание услуги',
+            }
+            return render(request, "service_form.html", context=context)
+    else:
+        return HttpResponseNotAllowed(["GET", "POST"])
+
+
+def service_update(request, service_id):
+    pass
