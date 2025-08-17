@@ -8,13 +8,19 @@ from .forms import ServiceForm
 from django.db.models import Q, Count, Sum
 
 
+
 def landing(request):
     """
     Отвечает за маршрут '/'
     """
+    # masters = Master.objects.prefetch_related("services").all()
     masters = Master.objects.prefetch_related('services').annotate(num_services=Count('services'))
-
+    
+    # Получаем все услуги отдельным запросом
     services = Service.objects.all()
+
+
+
     # reviews = Review.objects.all()  # Модель Review еще не создана
 
     context = {
@@ -104,7 +110,10 @@ def order_detail(request, order_id):
     """
     order = Order.objects.prefetch_related("services").select_related("master").annotate(total_price=Sum('services__price')).get(id=order_id)
 
+    #TODO Добавить в модель Order view_count. Миграции. Дописать логику обновления через F объект. Сделать коммит. Допишу логику с сохранением в сессию во избежании накруторк!
+
     context = {"order": order}
+
     return render(request, "order_detail.html", context=context)
 
 
@@ -129,93 +138,109 @@ def services_list(request):
     services = Service.objects.all()
     return render(request, "services_list.html", {"services": services})
 
+
+
 def service_create(request):
     if request.method == "GET":
+        # Создать пустую форму
+        form = ServiceForm()
         context = {
-            'operation_type': 'Создание услуги',
-            'service': {'name': '', 'description': '', 'price': ''},  # Пустые значения для новой услуги
+            "operation_type": "Создание услуги",
+            "form": form,
         }
-        return render(request, "service_form.html", context=context)
-    elif request.method == 'POST':
-        service_name = request.POST.get("service_name")
-        service_description = request.POST.get("service_description")
-        service_price = request.POST.get("service_price")
+        return render(request, "service_class_form.html", context=context)
+    
+    elif request.method == "POST":
+        # Создаем форму и помещаем в нее данные из POST-запроса
+        form = ServiceForm(request.POST)
 
-        if service_name and service_description and service_price:
-            try:
-                service_price = float(service_price.replace(",", "."))
-                
-                # Создаем новый объект услуги
-                service = Service(
-                    name=service_name,
-                    description=service_description,
-                    price=service_price,
-                    # Установите значения по умолчанию для других полей, если они обязательны
-                    duration=60,  # Значение по умолчанию для длительности
-                )
-                service.save()
-                
-                messages.success(request, f"Услуга '{service_name}' успешно создана!")
-                return redirect("services-list")
-            except ValueError:
-                messages.error(request, "Некорректная цена услуги")
+        # Проверяем, что форма валидна
+        if form.is_valid():
+            # Добываем данные из формы
+            name = form.cleaned_data["name"]
+            description = form.cleaned_data["description"]
+            price = form.cleaned_data["price"]
+            duration = form.cleaned_data["duration"]
+            is_popular = form.cleaned_data["is_popular"]
+            image =  form.cleaned_data["image"]
+
+            # Создать объект услуги
+            service = Service(
+                name=name,
+                description=description,
+                price=price,
+                duration=duration,
+                is_popular=is_popular,
+                image=image
+            )
+            # Сохранить объект в БД
+            service.save()
+            
+            # Перенаправить на страницу со списком услуг
+            return redirect("services-list")
         else:
-            messages.error(request, "Заполните все поля")
-
-        # Если возникла ошибка, возвращаем форму с введенными данными
-        context = {
-            'operation_type': 'Создание услуги',
-            'service': {
-                'name': service_name,
-                'description': service_description,
-                'price': service_price
-            },
-        }
-        return render(request, "service_form.html", context=context)
+            context = {
+                "operation_type": "Создание услуги",
+                "form": form,
+            }
+            return render(request, "service_class_form.html", context=context)
+        
     else:
+        # Вернуть ошибку 405 (Метод не разрешен)
         return HttpResponseNotAllowed(["GET", "POST"])
 
 
 def service_update(request, service_id):
-    try:
-        service = Service.objects.get(id=service_id)
-    except Service.DoesNotExist:
-        return HttpResponse("Услуга не найдена", status=404)
-        
     if request.method == "GET":
+        # Дать форму с данными этой услуги
+        try:
+            service = Service.objects.get(id=service_id)
+        except Service.DoesNotExist:
+            # Если нет такой услуги, дам 404
+            return HttpResponse("Услуга не найдена", status=404)
+        
+        
+        
         context = {
             "operation_type": "Обновление услуги",
             "service": service,
+
         }
-        return render(request, "service_form.html", context=context)
+        return render(request, "service_class_form.html", context=context)
     
     elif request.method == "POST":
+        # Получить данные из объекта запроса
         service_name = request.POST.get("service_name")
         service_description = request.POST.get("service_description")
         service_price = request.POST.get("service_price")
 
-        if service_name and service_description and service_price:
-            try:
-                service_price = float(service_price.replace(",", "."))
-                
-                # Обновляем ТОЛЬКО конкретный объект
-                service.name = service_name
-                service.description = service_description
-                service.price = service_price
-                service.save()  # Сохраняем изменения
-                
-                messages.success(request, f"Услуга '{service_name}' успешно обновлена!")
-                return redirect("services-list")
-            except ValueError:
-                messages.error(request, "Некорректная цена услуги")
-        else:
-            messages.error(request, "Заполните все поля")
+        
 
-        context = {
-            "operation_type": "Обновление услуги",
-            "service": service,
-        }
-        return render(request, "service_form.html", context=context)
+        # Получить объект сервиса
+        service = Service.objects.get(id=service_id)
+        service_price = float(service_price.replace(",", "."))
+        if service_name and service_description and service_price:
+            
+            # Создать объект сервиса
+            service = Service.objects.update(
+                name=service_name,
+                description=service_description,
+                price=service_price
+            )
+
+            
+    
+            # Перенаправить на страницу со списком услуг
+            return redirect("services-list")
+        else:
+            messages.error(request, "Ошибка при создании услуги")
+
+            context = {
+                "operation_type": "Обновление услуги",
+                "service": service,
+            }
+            return render(request, "service_class_form.html", context=context)
         
     else:
+        # Вернуть ошибку 405 (Метод не разрешен)
         return HttpResponseNotAllowed(["GET", "POST"])
