@@ -17,13 +17,15 @@ from core.views import (
 )
 
 
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", landing, name="landing"),
     path("thanks/", thanks, name="thanks"),
     path("orders/", orders_list, name="orders"),
     path("orders/<int:order_id>/", order_detail, name="order_detail"),
-    path("order/create/", order_create, name="order-create"),
+    path('order/', order_create, name='order-page'),
+    path('order/create/', order_create, name='order-create'),
     path("services/", services_list, name="services-list"),
     path("service/create/", service_create, name="service-create"),
     path("service/update/<int:service_id>/", service_update, name="service-update"),
