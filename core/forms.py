@@ -1,8 +1,20 @@
 from django import forms
-from .models import Order, Service
+from .models import Order, Service, Review, Master
 from django.utils import timezone
 from datetime import datetime
 
+
+class ReviewModelForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ['name', 'text', 'rating', 'master', 'photo']
+        widgets = {
+            'text': forms.Textarea(attrs={"class": "form-control"}),
+            'name': forms.TextInput(attrs={"class": "form-control"}),
+            'rating': forms.Select(attrs={'class': 'form-control'}),
+            'master': forms.Select(attrs={'class': 'form-control'}),
+            'photo': forms.FileInput(attrs={"class": "form-control"}),
+        }
 
 class ServiceForm(forms.ModelForm):
     class Meta:
@@ -29,7 +41,7 @@ class ServiceForm(forms.ModelForm):
 class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ["name", "phone", "comment", "appointment_date", "services"]
+        fields = ["name", "phone", "comment", 'master', "appointment_date", "services"]
         widgets = {
             "name": forms.TextInput(
                 attrs={"placeholder": "Ваше имя", "class": "form-control"}
@@ -40,6 +52,7 @@ class OrderForm(forms.ModelForm):
             "comment": forms.Textarea(
                 attrs={"placeholder": "Комментарий к заказу", "class": "form-control", "rows": 3}
             ),
+            'master': forms.Select(attrs={"class": "form-control"}),
             "services": forms.CheckboxSelectMultiple(
                 attrs={"class": "form-check-input"}
             ),
@@ -53,4 +66,17 @@ class OrderForm(forms.ModelForm):
         if appointment_date and appointment_date < timezone.now().date():
             raise forms.ValidationError("Дата записи не может быть в прошлом.")
         return appointment_date
+    def clean_services(self):
+        services = self.cleaned_data.get("services")
+        master = self.cleaned_data.get("master")
+        if not master or not services:
+            raise forms.ValidationError("Выберите хотя бы одну услугу.")
+        master_services = master.services.all()
+        not_approved_services = []
+        for service in services:
+            if service not in master_services:
+                not_approved_services.append(service.name) 
+        if not_approved_services:
+            raise forms.ValidationError('Этот мастер не предоставляет следующие услуги: ' + ', '.join(not_approved_services))
+        return services
 
