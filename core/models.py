@@ -65,7 +65,7 @@ class Service(models.Model):
         verbose_name_plural = "Услуги"
 
 class Review(models.Model):
-    RAITING_CHOICES = [
+    RATING_CHOICES = [
     (1, 'ужасно'),
     (2, 'плохо'),
     (3, 'средне'),
@@ -74,7 +74,7 @@ class Review(models.Model):
     ]
 
     
-    STAUS_CHOICES = [
+    STATUS_CHOICES = [
         ('new', 'Новый'),
         ('ai_moderating', 'Модератор AI'),
         ('ai_approved', 'Одобрен AI'),
@@ -85,8 +85,8 @@ class Review(models.Model):
 
     name = models.CharField(max_length=50, verbose_name='Имя', blank=True, null=True)
     text = models.TextField(verbose_name='Отзыв')
-    rating = models.PositiveSmallIntegerField(choices=RAITING_CHOICES, verbose_name='Рейтинг')
+    rating = models.PositiveSmallIntegerField(choices=RATING_CHOICES, verbose_name='Рейтинг', default=5)
     master = models.ForeignKey(Master, on_delete=models.SET_NULL, related_name='reviews', verbose_name='Мастер', null=True)
     photo = models.ImageField(upload_to='reviews/', verbose_name='Фото', blank=True, null=True)
-    status = models.CharField(max_length=20, choices=STAUS_CHOICES, default='new', verbose_name='Статус')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='new', verbose_name='Статус')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
