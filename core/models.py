@@ -27,16 +27,15 @@ class Order(models.Model):
         verbose_name_plural = "Заказы"
 
 
+from django.db import models
+
 class Master(models.Model):
-    name = models.CharField(max_length=150, verbose_name="Имя")
-    photo = models.ImageField(upload_to="masters", verbose_name="Фото", null=True, blank=True)
+    name = models.CharField(max_length=100, verbose_name="Имя")
     phone = models.CharField(max_length=20, verbose_name="Телефон")
-    address = models.CharField(
-        null=True, blank=True, max_length=250, verbose_name="Адрес"
-    )
-    experience = models.PositiveIntegerField(verbose_name="Опыт работы", blank=True, null=True, default=0)
+    experience = models.IntegerField(default=0, verbose_name="Опыт работы (лет)")
     is_active = models.BooleanField(default=True, verbose_name="Активен")
-    services = models.ManyToManyField("Service", verbose_name="Услуги", default=None, related_name="masters")
+    services = models.ManyToManyField("Service", verbose_name="Услуги", related_name="masters")
+    
     def __str__(self):
         return self.name
     
@@ -44,23 +43,29 @@ class Master(models.Model):
         verbose_name = "Мастер"
         verbose_name_plural = "Мастера"
 
-
 class Service(models.Model):
-    name = models.CharField(max_length=50, verbose_name="Название")
-    description = models.TextField(blank=True, verbose_name="Описание")
+    name = models.CharField(max_length=100, verbose_name="Название")
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Цена")
-    duration = models.PositiveIntegerField(
-        verbose_name="Длительность", help_text="Время выполнения в минутах", default=30
-    )
+    duration = models.IntegerField(verbose_name="Длительность (мин)")
     is_popular = models.BooleanField(default=False, verbose_name="Популярная услуга")
-    image = models.ImageField(
-        upload_to="services/", blank=True, null=True, verbose_name="Изображение"
-    )
-
+    
     def __str__(self):
-        return self.name
+        return f"{self.name} - {self.price} ₽"
     
     class Meta:
         verbose_name = "Услуга"
         verbose_name_plural = "Услуги"
 
+class Review(models.Model):
+    master = models.ForeignKey(Master, on_delete=models.CASCADE, related_name="reviews", verbose_name="Мастер")
+    author_name = models.CharField(max_length=100, verbose_name="Имя автора")
+    text = models.TextField(verbose_name="Текст отзыва")
+    rating = models.IntegerField(choices=[(i, i) for i in range(1, 6)], verbose_name="Оценка")
+    date_created = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    
+    def __str__(self):
+        return f"Отзыв от {self.author_name} о {self.master.name}"
+    
+    class Meta:
+        verbose_name = "Отзыв"
+        verbose_name_plural = "Отзывы"
