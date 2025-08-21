@@ -2,20 +2,13 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from debug_toolbar.toolbar import debug_toolbar_urls
+from core import views
 from core.views import (
-    landing,
-    thanks,
-    orders_list,
-    order_detail,
-    order_create,
-    services_list,
-    service_create,
-    service_update,
-    order_update,
-    review_create,
-    get_services_by_master,
+    landing, thanks, orders_list, order_detail, order_create, 
+    review_create, services_list, service_create, service_update, 
+    order_update, get_services_by_master
 )
 
 

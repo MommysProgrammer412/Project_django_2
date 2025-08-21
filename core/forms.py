@@ -41,7 +41,7 @@ class ServiceForm(forms.ModelForm):
 class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ["name", "phone", "comment", 'master', "appointment_date", "services"]
+        fields = ['name', 'phone', 'comment', 'master', 'services', 'appointment_date']
         widgets = {
             "name": forms.TextInput(
                 attrs={"placeholder": "Ваше имя", "class": "form-control"}
@@ -52,7 +52,7 @@ class OrderForm(forms.ModelForm):
             "comment": forms.Textarea(
                 attrs={"placeholder": "Комментарий к заказу", "class": "form-control", "rows": 3}
             ),
-            'master': forms.Select(attrs={"class": "form-control"}),
+            'master': forms.Select(attrs={"class": "form-control", "id": "id_master"}),
             "services": forms.CheckboxSelectMultiple(
                 attrs={"class": "form-check-input"}
             ),
@@ -61,22 +61,53 @@ class OrderForm(forms.ModelForm):
             ),
         }
 
-    def clean_appointment_date(self):
-        appointment_date = self.cleaned_data.get("appointment_date")
-        if appointment_date and appointment_date < timezone.now().date():
-            raise forms.ValidationError("Дата записи не может быть в прошлом.")
-        return appointment_date
-    def clean_services(self):
-        services = self.cleaned_data.get("services")
-        master = self.cleaned_data.get("master")
-        if not master or not services:
-            raise forms.ValidationError("Выберите хотя бы одну услугу.")
-        master_services = master.services.all()
-        not_approved_services = []
-        for service in services:
-            if service not in master_services:
-                not_approved_services.append(service.name) 
-        if not_approved_services:
-            raise forms.ValidationError('Этот мастер не предоставляет следующие услуги: ' + ', '.join(not_approved_services))
-        return services
+    def clean(self):
+        cleaned_data = super().clean()
+        master = cleaned_data.get('master')
+        services = cleaned_data.get('services')
+        
+        if master and services:
+            # Получаем услуги, которые предоставляет выбранный мастер
+            master_services = master.services.all()
+            
+            # Проверяем, что все выбранные услуги есть у мастера
+            for service in services:
+                if service not in master_services:
+                    raise forms.ValidationError(
+                        f"Мастер {master.name} не предоставляет выбранные услуги"
+                    )
+        
+        return cleaned_data
 
+class ReviewForm(forms.ModelForm):
+    RATING_CHOICES = [
+        (1, '1 - Ужасно'),
+        (2, '2 - Плохо'),
+        (3, '3 - Средне'),
+        (4, '4 - Хорошо'),
+        (5, '5 - Отлично'),
+    ]
+    
+    rating = forms.ChoiceField(
+        choices=RATING_CHOICES,
+        widget=forms.Select(attrs={"class": "form-control"}),
+        label="Оценка"
+    )
+    
+    class Meta:
+        model = Review
+        fields = ['master', 'rating', 'name', 'text']
+        widgets = {
+            'master': forms.Select(attrs={"class": "form-control"}),
+            'name': forms.TextInput(
+                attrs={"placeholder": "Ваше имя", "class": "form-control"}
+            ),
+            'text': forms.Textarea(
+                attrs={"placeholder": "Ваш отзыв", "class": "form-control", "rows": 4}
+            ),
+        }
+        labels = {
+            'master': 'Мастер',
+            'name': 'Ваше имя',
+            'text': 'Отзыв',
+        }

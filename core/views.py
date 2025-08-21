@@ -1,20 +1,28 @@
 # core/views.py
-from django.shortcuts import render, HttpResponse, redirect
+from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from django.http import JsonResponse, HttpResponseNotAllowed
 from django.contrib import messages
 from .data import orders
 from .models import Order, Master, Service, Review
-from .forms import ServiceForm, OrderForm, ReviewModelForm
+from .forms import ServiceForm, OrderForm, ReviewModelForm, ReviewForm
 from django.db.models import Q, Count, Sum
 
 
 def get_services_by_master(request, master_id):
-    master = Master.objects.prefetch_related("services").get(id=master_id)
+    """AJAX endpoint для получения услуг мастера"""
+    master = get_object_or_404(Master, id=master_id)
     services = master.services.all()
-
-    services_data = [{"id": service.id, "name": service.name} for service in services]
-
-    return JsonResponse({"services": services_data})
+    
+    services_data = [
+        {
+            'id': service.id,
+            'name': service.name,
+            'price': float(service.price)
+        }
+        for service in services
+    ]
+    
+    return JsonResponse({'services': services_data})
 
 def review_create(request):
     if request.method == "GET":
@@ -33,124 +41,45 @@ def review_create(request):
 
 
 def landing(request):
-    """
-    Отвечает за маршрут '/'
-    """
-    # masters = Master.objects.prefetch_related("services").all()
-    masters = Master.objects.prefetch_related("services").annotate(
-        num_services=Count("services")
-    )
-
-    # Получаем все услуги отдельным запросом
-    services = Service.objects.all()
-
-    # reviews = Review.objects.all()  # Модель Review еще не создана
-
+    """Главная страница"""
+    masters = Master.objects.all()[:3]
+    services = Service.objects.all()[:6]
+    reviews = Review.objects.select_related('master').filter(status='approved')[:5]
+    
     context = {
-        "masters": masters,
-        "services": services,
-        # "reviews": reviews,
+        'masters': masters,
+        'services': services,
+        'reviews': reviews,
     }
-    return render(request, "landing.html", context=context)
+    return render(request, 'landing.html', context)
 
 
 def thanks(request):
-    """
-    Отвечает за маршрут 'thanks/'
-    """
-    context = {"test_var": "Привет из базового шаблона!"}
-    return render(request, "thanks.html", context=context)
+    """Страница благодарности"""
+    return render(request, 'thanks.html')
 
 
 def orders_list(request):
-    """
-    Отвечает за маршрут 'orders/'
-    """
-    # Получаю из GET запроса все данные URL
-    # ПОИСКОВАЯ ФОРМА
-    search_query = request.GET.get("q", "")
-    # ЧЕКБОКСЫ выборки по полям
-    # 1. поиск по телефону - search_by_phone
-    # 2. поиск по имени - search_by_name
-    # 3. поиск по тексту комментария - search_by_comment
-    checkbox_name = request.GET.get("search_by_name", "")
-    checkbox_phone = request.GET.get("search_by_phone", "")
-    checkbox_comment = request.GET.get("search_by_comment", "")
-    # ЧЕКББОКСЫ выборки по статусам
-    # status_new
-    # status_confirmed
-    # status_completed
-    # status_canceled
-    checkbox_status_new = request.GET.get("status_new", "")
-    checkbox_status_confirmed = request.GET.get("status_confirmed", "")
-    checkbox_status_completed = request.GET.get("status_completed", "")
-    checkbox_status_canceled = request.GET.get("status_canceled", "")
+    """Список заявок"""
+    orders = Order.objects.select_related('master').prefetch_related('services').all().order_by('-date_created')
+    context = {'orders': orders}
+    return render(request, 'orders_list.html', context)
 
-    # РАДИОКНОПКА Порядок сортировки по дате
-    # order_by_date - desc, asc
-    order_by_date = request.GET.get("order_by_date", "desc")
 
-    # 1. Создаем Q-объект для текстового поиска
-    search_q = Q()
-    if search_query:
-        # Внутренние условия поиска объединяем через ИЛИ (|=)
-        if checkbox_phone:
-            search_q |= Q(phone__icontains=search_query)
-        if checkbox_name:
-            search_q |= Q(name__icontains=search_query)
-        if checkbox_comment:
-            search_q |= Q(comment__icontains=search_query)
-
-    # 2. Создаем Q-объект для фильтрации по статусам
-    status_q = Q()
-    # Условия статусов тоже объединяем через ИЛИ (|=)
-    if checkbox_status_new:
-        status_q |= Q(status="new")
-    if checkbox_status_confirmed:
-        status_q |= Q(status="confirmed")
-    if checkbox_status_completed:
-        status_q |= Q(status="completed")
-    if checkbox_status_canceled:
-        status_q |= Q(status="canceled")
-
-    # Порядок сортировки
-    ordering = "-date_created" if order_by_date == "desc" else "date_created"
-
-    # 3. Объединяем два Q-объекта через И (&)
-    # Это гарантирует, что запись должна соответствовать И условиям поиска, И условиям статуса
-    orders = (
+def order_detail(request, pk):
+    """Детали заявки"""
+    order = get_object_or_404(
         Order.objects.prefetch_related("services")
         .select_related("master")
-        .filter(search_q & status_q)
-        .order_by(ordering)
+        .annotate(total_price=Sum("services__price")),
+        id=pk
     )
-
-    context = {"orders": orders}
-
-    return render(request, "orders_list.html", context=context)
-
-
-def order_detail(request, order_id):
-    """
-    Отвечает за маршрут 'orders/<int:order_id>/'
-    :param request: HttpRequest
-    :param order_id: int (номер заказа)
-    """
-    order = (
-        Order.objects.prefetch_related("services")
-        .select_related("master")
-        .annotate(total_price=Sum("services__price"))
-        .get(id=order_id)
-    )
-
-    # TODO Добавить в модель Order view_count. Миграции. Дописать логику обновления через F объект. Сделать коммит. Допишу логику с сохранением в сессию во избежании накруторк!
-
     context = {"order": order}
-
-    return render(request, "order_detail.html", context=context)
+    return render(request, "order_detail.html", context)
 
 
 def order_create(request):
+    """Создание заявки"""
     if request.method == "POST":
         form = OrderForm(request.POST)
         if form.is_valid():
@@ -159,8 +88,19 @@ def order_create(request):
             return redirect("thanks")
     else:
         form = OrderForm()
-
     return render(request, "order_class_form.html", {"form": form})
+
+def create_order(request):
+    """Альтернативное представление для создания заявки"""
+    if request.method == "POST":
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Заявка успешно отправлена!")
+            return redirect("thanks")
+    else:
+        form = OrderForm()
+    return render(request, "order_form.html", {"form": form})
 
 
 def order_update(request, order_id):
@@ -187,6 +127,17 @@ def order_update(request, order_id):
     }
     return render(request, "order_class_form.html", context)
 
+def create_review(request):
+    """Создание отзыва"""
+    if request.method == "POST":
+        form = ReviewForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Отзыв успешно отправлен!")
+            return redirect("thanks")
+    else:
+        form = ReviewForm()
+    return render(request, "review_form.html", {"form": form})
 
 def services_list(request):
     services = Service.objects.all()
