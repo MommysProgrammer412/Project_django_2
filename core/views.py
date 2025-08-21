@@ -7,17 +7,30 @@ from .models import Order, Master, Service, Review
 from .forms import ServiceForm, OrderForm, ReviewModelForm
 from django.db.models import Q, Count, Sum
 
+
+def get_services_by_master(request, master_id):
+    master = Master.objects.prefetch_related("services").get(id=master_id)
+    services = master.services.all()
+
+    services_data = [{"id": service.id, "name": service.name} for service in services]
+
+    return JsonResponse({"services": services_data})
+
 def review_create(request):
-    if request.method == 'GET':
+    if request.method == "GET":
         form = ReviewModelForm()
         return render(request, "review_class_form.html", {"form": form})
-    elif request.method == 'POST':
+    
+    elif request.method == "POST":
         form = ReviewModelForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect("landing")
         else:
             return render(request, "review_class_form.html", {"form": form})
+
+
+
 
 def landing(request):
     """
