@@ -18,7 +18,8 @@ class Order(models.Model):
     master = models.ForeignKey("Master", on_delete=models.SET_NULL, null=True, verbose_name="Мастер")
     appointment_date = models.DateField(null=True, blank=True, verbose_name="Дата записи")
     services = models.ManyToManyField("Service", verbose_name="Услуги", default=None, related_name="orders")
-    
+    view_count = models.PositiveIntegerField(default=0, verbose_name="Количество просмотров", blank=True)
+
     def __str__(self):
         return f"{self.name} - {self.phone}"
     
