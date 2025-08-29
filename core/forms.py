@@ -36,6 +36,12 @@ class ServiceForm(forms.ModelForm):
             "description": "Введите продающее описание услуги",
             "image": "Квадратное изображение не меньше 500х500",
         }
+    def clean_price(self):
+        price = self.cleaned_data.get("price")
+        if price < 0:
+            raise forms.ValidationError("Цена услуги должна быть положительной.")
+        return price
+
 
 
 class OrderForm(forms.ModelForm):
