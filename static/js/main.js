@@ -1,7 +1,7 @@
 const AUTO_HIDE_DELAY = 5000;
 
 document.addEventListener("DOMContentLoaded", function () {
-  /* Плавный скролл по якорям */
+  // Плавный скролл по якорям
   document.querySelectorAll('a[href^="#"]').forEach((link) => {
     link.addEventListener("click", function (e) {
       e.preventDefault();
@@ -17,14 +17,13 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  /* Логика для автоматического скрытия уведомлений (alerts) */
+  // Автоматическое скрытие уведомлений
   const alertElements = document.querySelectorAll(".alert");
   alertElements.forEach(function (element) {
-    // Устанавливаем таймер для закрытия через 5 секунд (5000 миллисекунд)
     setTimeout(function () {
-      // Получаем экземпляр Alert и вызываем метод close()
-      const alertInstance = bootstrap.Alert.getOrCreateInstance(element);
-      alertInstance.close();
+      // Используем Bootstrap API для плавного закрытия
+      const bsAlert = new bootstrap.Alert(element);
+      bsAlert.close();
     }, AUTO_HIDE_DELAY);
   });
 });
