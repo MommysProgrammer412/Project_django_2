@@ -25,6 +25,26 @@
         {% include 'include_nav_menu.html' %}
       </header>
     
+{% if messages %}
+          <div class="container-fluid mt-2">
+              {% for message in messages %}
+                  <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show" role="alert">
+                      <strong>
+                          {% if message.tags == 'success' %}
+                              <i class="bi bi-check-circle-fill me-2"></i>Успешно!
+                          {% elif message.tags == 'error' %}
+                              <i class="bi bi-exclamation-triangle-fill me-2"></i>Ошибка!
+                          {% else %}
+                              <i class="bi bi-info-circle-fill me-2"></i>Внимание!
+                          {% endif %}
+                      </strong>
+                      {{ message }}
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+              {% endfor %}
+          </div>
+      {% endif %}
+
       <main class="flex-grow-1">
         {% block content %}{% endblock %}
       </main>

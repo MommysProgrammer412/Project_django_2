@@ -17,20 +17,20 @@ def notify_telegram_on_order_create(sender, instance, action, **kwargs):
     Он обрабатывает добавление КАЖДОЙ услуги в запись на консультацию.
     """
     try:
-        # action - post_add - Добавление записи в таблицу многие ко многим
-        # kwargs.get('pk_set') - список первичных ключей добавленных записей - создается только при добавлении записи в таблицу 
         if action == 'post_add' and kwargs.get('pk_set'):
             list_services = [service.name for service in instance.services.all()]
             appointment_date = instance.appointment_date.strftime("%d.%m.%Y") if instance.appointment_date else "Не указана"
+            master_name = instance.master.name if instance.master else "Не назначен"  # ИСПРАВЛЕНИЕ
+            
             tg_markdown_message = f"""
 
 ====== *Новый заказ!* ======
 **Имя:** {instance.name}
 **Телефон:** {instance.phone}
-**Мастер:** {instance.master.name}
+**Мастер:** {master_name}
 **Дата записи:** {appointment_date}
 **Услуги:** {', '.join(list_services)}
-**Комментарий:** {instance.comment}
+**Комментарий:** {instance.comment or "Нет комментария"}
 
 **Подробнее:** http://127.0.0.1:8000/admin/core/order/{instance.id}/change/
 

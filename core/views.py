@@ -42,7 +42,11 @@ class ReviewCreateView(CreateView):
     form_class = ReviewModelForm
     template_name = "review_class_form.html"
     success_url = reverse_lazy("thanks", kwargs={"source": "review-create"})
+    success_message = "Отзыв успешно отправлен!"  # ДОБАВЬТЕ ЭТО
 
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:  # ДОБАВЬТЕ ЭТО
+        messages.success(self.request, self.success_message)
+        return super().form_valid(form)
 
 class LandingTemplateView(TemplateView):
     """Классовая view для главной страницы"""
