@@ -46,7 +46,7 @@ class OrderAdmin(admin.ModelAdmin):
 
     list_filter = ('status', 'master', TotalOrderPrice)
 
-    list_per_page = 20
+    list_per_page = 5
 
     list_display_links = ('phone', 'name')
 
