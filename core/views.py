@@ -1,4 +1,3 @@
-# core/views.py
 from django.forms import BaseModelForm
 from django.shortcuts import render, HttpResponse, redirect
 from django.http import JsonResponse, HttpResponseNotAllowed
@@ -8,7 +7,6 @@ from .forms import ServiceForm, OrderForm, ReviewModelForm
 from django.db.models import Q, Count, Sum, F
 # Импорт миксинов для проверки прав
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, PermissionRequiredMixin
-
 # Импорт классовых вью, View, TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.views import View
 from django.views.generic import (
@@ -20,7 +18,6 @@ from django.views.generic import (
     TemplateView,
 )
 from django.urls import reverse_lazy, reverse
-
 
 class UserIsStuffPassedMixin(UserPassesTestMixin):
     """
@@ -37,58 +34,44 @@ class AjaxMasterServicesView(View):
     Вью для отдачи массива объектов услуг по ID мастера.
     Обслуживает AJAX запросы формы создания заказа.
     """
-
     def get(self, request, master_id):
         master = Master.objects.prefetch_related("services").get(id=master_id)
         services = master.services.all()
-
         services_data = [
             {"id": service.id, "name": service.name} for service in services
         ]
-
         return JsonResponse({"services": services_data})
-
 
 class ReviewCreateView(CreateView):
     model = Review
     form_class = ReviewModelForm
-    template_name = "review_class_form.html"
-    success_url = reverse_lazy("thanks", kwargs={"source": "review-create"})
+    template_name = 'review_form.html'
+    success_url = reverse_lazy('thanks')
 
+    def form_valid(self, form):
+        messages.success(self.request, 'Отзыв успешно создан!')
+        return super().form_valid(form)
 
-class LandingTemplateView(TemplateView):
-    """Классовая view для главной страницы"""
-
-    template_name = "landing.html"
+class LandingView(TemplateView):
+    template_name = 'landing.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["masters"] = Master.objects.prefetch_related("services").annotate(
-            num_services=Count("services")
-        )
-        context["services"] = Service.objects.all()
-        context["reviews"] = Review.objects.all()
-
+        context['masters'] = Master.objects.all()
+        context['reviews'] = Review.objects.all()
         return context
 
-
-class ThanksTemplateView(TemplateView):
-    """
-    Классовая view для маршрута 'thanks/'
-    """
-
-    template_name = "thanks.html"
+class ThanksView(TemplateView):
+    template_name = 'thanks.html'
 
     def get_context_data(self, **kwargs):
         """
         Расширение get_context_data для возможности передать в шаблон {{ title }} и {{ message }}.
-
         Они будут разные, в зависимости от куда пришел человек.
         Со страницы order/create/ с псевдонимом order-create
         Или со страницы review/create/ с псевдонимом review-create
         """
         context = super().get_context_data(**kwargs)
-
         if kwargs["source"]:
             source = kwargs["source"]
             if source == "order-create":
@@ -101,105 +84,32 @@ class ThanksTemplateView(TemplateView):
                 context["message"] = (
                     "Ваш отзыв принят и отправлен на модерацию. После проверки он появится на сайте."
                 )
-
-        else:
-            context["title"] = "Спасибо!"
-            context["message"] = "Спасибо за ваше обращение!"
-
+            else:
+                context["title"] = "Спасибо!"
+                context["message"] = "Спасибо за ваше обращение!"
         return context
 
-
-class OrderListView(ListView):
+class OrdersListView(ListView):
     model = Order
-    template_name = "orders_list.html"
-    context_object_name = "orders"
-    # Помещает объект с назваем page_obj в контекст шаблона
-    paginate_by = 5
+    template_name = 'orders_list.html'
+    context_object_name = 'orders'
+    ordering = ['-date_created']
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        # Получаю из GET запроса все данные URL
-        # ПОИСКОВАЯ ФОРМА
-        search_query = self.request.GET.get("q", "")
-        # ЧЕКБОКСЫ выборки по полям
-        # 1. поиск по телефону - search_by_phone
-        # 2. поиск по имени - search_by_name
-        # 3. поиск по тексту комментария - search_by_comment
-        checkbox_name = self.request.GET.get("search_by_name", "")
-        checkbox_phone = self.request.GET.get("search_by_phone", "")
-        checkbox_comment = self.request.GET.get("search_by_comment", "")
-        # ЧЕКББОКСЫ выборки по статусам
-        # status_new
-        # status_confirmed
-        # status_completed
-        # status_canceled
-        checkbox_status_new = self.request.GET.get("status_new", "")
-        checkbox_status_confirmed = self.request.GET.get("status_confirmed", "")
-        checkbox_status_completed = self.request.GET.get("status_completed", "")
-        checkbox_status_canceled = self.request.GET.get("status_canceled", "")
-
-        # РАДИОКНОПКА Порядок сортировки по дате
-        # order_by_date - desc, asc
-        order_by_date = self.request.GET.get("order_by_date", "desc")
-
-        # 1. Создаем Q-объект для текстового поиска
-        search_q = Q()
+        search_query = self.request.GET.get('q', '')
         if search_query:
-            # Внутренние условия поиска объединяем через ИЛИ (|=)
-            if checkbox_phone:
-                search_q |= Q(phone__icontains=search_query)
-            if checkbox_name:
-                search_q |= Q(name__icontains=search_query)
-            if checkbox_comment:
-                search_q |= Q(comment__icontains=search_query)
-
-        # 2. Создаем Q-объект для фильтрации по статусам
-        status_q = Q()
-        # Условия статусов тоже объединяем через ИЛИ (|=)
-        if checkbox_status_new:
-            status_q |= Q(status="new")
-        if checkbox_status_confirmed:
-            status_q |= Q(status="confirmed")
-        if checkbox_status_completed:
-            status_q |= Q(status="completed")
-        if checkbox_status_canceled:
-            status_q |= Q(status="canceled")
-
-        # Порядок сортировки
-        ordering = "-date_created" if order_by_date == "desc" else "date_created"
-
-        # 3. Объединяем два Q-объекта через И (&)
-        # Это гарантирует, что запись должна соответствовать И условиям поиска, И условиям статуса
-        orders = (
-            queryset.prefetch_related("services")
-            .select_related("master")
-            .filter(search_q & status_q)
-            .order_by(ordering)
-        )
-
-        return orders
-    
-    def get_context_data(self, **kwargs):
-        """
-        Добавляем в контекст параметры GET-запроса для корректной работы пагинации с фильтрами.
-        """
-        context = super().get_context_data(**kwargs)
-        # Копируем текущие GET-параметры
-        get_params = self.request.GET.copy()
-        # Если в параметрах есть 'page', мы его удаляем,
-        # так как номер страницы будет добавлен в шаблоне
-        if 'page' in get_params:
-            del get_params['page']
-        # Кодируем параметры в строку и добавляем в контекст
-        context['get_params'] = get_params.urlencode()
-        return context
-
+            queryset = queryset.filter(
+                Q(name__icontains=search_query) |
+                Q(phone__icontains=search_query) |
+                Q(comment__icontains=search_query)
+            )
+        return queryset
 
 class OrderDetailView(DetailView):
     model = Order
-    template_name = "order_detail.html"
-    context_object_name = "order"
-    pk_url_kwarg = "order_id"  # Указываем, что id брать из URL kwarg 'order_id'
+    template_name = 'order_detail.html'
+    context_object_name = 'order'
 
     def get_queryset(self):
         """
@@ -221,7 +131,6 @@ class OrderDetailView(DetailView):
         # Сначала получаем объект стандартным способом (он будет взят из queryset,
         # который мы определили в get_queryset)
         order = super().get_object(queryset)
-
         # Теперь выполняем логику с сессией и счетчиком
         session_key = f"order_{order.id}_viewed"
         if not self.request.session.get(session_key):
@@ -231,25 +140,17 @@ class OrderDetailView(DetailView):
             order.save(update_fields=["view_count"])
             # Обновляем объект из БД, чтобы в шаблоне было актуальное значение
             order.refresh_from_db()
-
         return order
 
-
 class OrderCreateView(CreateView):
+    model = Order
     form_class = OrderForm
-    template_name = "order_class_form.html"
-    success_url = reverse_lazy("thanks", kwargs={"source": "order-create"})
-    success_message = "Заказ успешно создан!"
+    template_name = 'order_form.html'
+    success_url = reverse_lazy('thanks')
 
-    def form_valid(self, form: BaseModelForm) -> HttpResponse:
-        messages.success(self.request, self.success_message)
+    def form_valid(self, form):
+        messages.success(self.request, 'Заявка успешно создана!')
         return super().form_valid(form)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["operation_type"] = "Создание заказа"
-        return context
-
 
 class OrderUpdateView(PermissionRequiredMixin, UpdateView):
     permission_required = "core.change_order"
@@ -269,14 +170,12 @@ class OrderUpdateView(PermissionRequiredMixin, UpdateView):
         context["operation_type"] = "Редактирование заказа"
         return context
 
-
 class ServicesListView(LoginRequiredMixin, ListView):
     model = Service
     # queryset = Service.objects.all().order_by("-price")
     template_name = "services_list.html"
     # object_list - стандартное имя для списка объектов
     # context_object_name = "services"
-
 
 class ServiceCreateView(UserIsStuffPassedMixin, CreateView):
     form_class = ServiceForm
@@ -298,12 +197,11 @@ class ServiceCreateView(UserIsStuffPassedMixin, CreateView):
         )
         return super().form_invalid(form)
 
-
 class ServiceUpdateView(UserIsStuffPassedMixin, UpdateView):
     model = Service
     form_class = ServiceForm
     template_name = "service_class_form.html"
-    success_url = reverse_lazy("servфываices-list")
+    success_url = reverse_lazy("services-list")
     # Стандартное имя - pk, если в url другое - мы можем дать название тут
     pk_url_kwarg = "service_id"
 
