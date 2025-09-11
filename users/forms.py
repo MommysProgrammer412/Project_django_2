@@ -1,11 +1,18 @@
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+# users/forms.py
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm
 from django import forms
 
 # get_user_model - получает модель пользователя автоматически, и нам не страшно если мы поменяем модель пользователя в будущем
 from django.contrib.auth import get_user_model
 
+# Мы поменяли модель пользователя, но так как используется get_user_model нам не надо ничего менять!)
 user_model = get_user_model()
 
+class CustomPasswordChangeForm(PasswordChangeForm):
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            for field_name, field in self.fields.items():
+                field.widget.attrs.update({"class": "form-control"})
 
 class CustomRegisterForm(UserCreationForm):
     class Meta:
