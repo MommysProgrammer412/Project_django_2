@@ -1,0 +1,1279 @@
+[
+  {
+    "model": "auth.permission",
+    "pk": 1,
+    "fields": {
+      "name": "Can add log entry",
+      "content_type": 1,
+      "codename": "add_logentry"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 2,
+    "fields": {
+      "name": "Can change log entry",
+      "content_type": 1,
+      "codename": "change_logentry"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 3,
+    "fields": {
+      "name": "Can delete log entry",
+      "content_type": 1,
+      "codename": "delete_logentry"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 4,
+    "fields": {
+      "name": "Can view log entry",
+      "content_type": 1,
+      "codename": "view_logentry"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 5,
+    "fields": {
+      "name": "Can add permission",
+      "content_type": 2,
+      "codename": "add_permission"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 6,
+    "fields": {
+      "name": "Can change permission",
+      "content_type": 2,
+      "codename": "change_permission"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 7,
+    "fields": {
+      "name": "Can delete permission",
+      "content_type": 2,
+      "codename": "delete_permission"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 8,
+    "fields": {
+      "name": "Can view permission",
+      "content_type": 2,
+      "codename": "view_permission"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 9,
+    "fields": {
+      "name": "Can add group",
+      "content_type": 3,
+      "codename": "add_group"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 10,
+    "fields": {
+      "name": "Can change group",
+      "content_type": 3,
+      "codename": "change_group"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 11,
+    "fields": {
+      "name": "Can delete group",
+      "content_type": 3,
+      "codename": "delete_group"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 12,
+    "fields": {
+      "name": "Can view group",
+      "content_type": 3,
+      "codename": "view_group"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 13,
+    "fields": {
+      "name": "Can add content type",
+      "content_type": 4,
+      "codename": "add_contenttype"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 14,
+    "fields": {
+      "name": "Can change content type",
+      "content_type": 4,
+      "codename": "change_contenttype"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 15,
+    "fields": {
+      "name": "Can delete content type",
+      "content_type": 4,
+      "codename": "delete_contenttype"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 16,
+    "fields": {
+      "name": "Can view content type",
+      "content_type": 4,
+      "codename": "view_contenttype"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 17,
+    "fields": {
+      "name": "Can add session",
+      "content_type": 5,
+      "codename": "add_session"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 18,
+    "fields": {
+      "name": "Can change session",
+      "content_type": 5,
+      "codename": "change_session"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 19,
+    "fields": {
+      "name": "Can delete session",
+      "content_type": 5,
+      "codename": "delete_session"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 20,
+    "fields": {
+      "name": "Can view session",
+      "content_type": 5,
+      "codename": "view_session"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 21,
+    "fields": {
+      "name": "Can add history entry",
+      "content_type": 6,
+      "codename": "add_historyentry"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 22,
+    "fields": {
+      "name": "Can change history entry",
+      "content_type": 6,
+      "codename": "change_historyentry"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 23,
+    "fields": {
+      "name": "Can delete history entry",
+      "content_type": 6,
+      "codename": "delete_historyentry"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 24,
+    "fields": {
+      "name": "Can view history entry",
+      "content_type": 6,
+      "codename": "view_historyentry"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 25,
+    "fields": {
+      "name": "Can add Мастер",
+      "content_type": 7,
+      "codename": "add_master"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 26,
+    "fields": {
+      "name": "Can change Мастер",
+      "content_type": 7,
+      "codename": "change_master"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 27,
+    "fields": {
+      "name": "Can delete Мастер",
+      "content_type": 7,
+      "codename": "delete_master"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 28,
+    "fields": {
+      "name": "Can view Мастер",
+      "content_type": 7,
+      "codename": "view_master"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 29,
+    "fields": {
+      "name": "Can add Заказ",
+      "content_type": 8,
+      "codename": "add_order"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 30,
+    "fields": {
+      "name": "Can change Заказ",
+      "content_type": 8,
+      "codename": "change_order"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 31,
+    "fields": {
+      "name": "Can delete Заказ",
+      "content_type": 8,
+      "codename": "delete_order"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 32,
+    "fields": {
+      "name": "Can view Заказ",
+      "content_type": 8,
+      "codename": "view_order"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 33,
+    "fields": {
+      "name": "Can add Услуга",
+      "content_type": 9,
+      "codename": "add_service"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 34,
+    "fields": {
+      "name": "Can change Услуга",
+      "content_type": 9,
+      "codename": "change_service"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 35,
+    "fields": {
+      "name": "Can delete Услуга",
+      "content_type": 9,
+      "codename": "delete_service"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 36,
+    "fields": {
+      "name": "Can view Услуга",
+      "content_type": 9,
+      "codename": "view_service"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 37,
+    "fields": {
+      "name": "Can add review",
+      "content_type": 10,
+      "codename": "add_review"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 38,
+    "fields": {
+      "name": "Can change review",
+      "content_type": 10,
+      "codename": "change_review"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 39,
+    "fields": {
+      "name": "Can delete review",
+      "content_type": 10,
+      "codename": "delete_review"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 40,
+    "fields": {
+      "name": "Can view review",
+      "content_type": 10,
+      "codename": "view_review"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 41,
+    "fields": {
+      "name": "Can add user",
+      "content_type": 11,
+      "codename": "add_customuser"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 42,
+    "fields": {
+      "name": "Can change user",
+      "content_type": 11,
+      "codename": "change_customuser"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 43,
+    "fields": {
+      "name": "Can delete user",
+      "content_type": 11,
+      "codename": "delete_customuser"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 44,
+    "fields": {
+      "name": "Can view user",
+      "content_type": 11,
+      "codename": "view_customuser"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 1,
+    "fields": { "app_label": "admin", "model": "logentry" }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 2,
+    "fields": { "app_label": "auth", "model": "permission" }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 3,
+    "fields": { "app_label": "auth", "model": "group" }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 4,
+    "fields": { "app_label": "contenttypes", "model": "contenttype" }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 5,
+    "fields": { "app_label": "sessions", "model": "session" }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 6,
+    "fields": { "app_label": "debug_toolbar", "model": "historyentry" }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 7,
+    "fields": { "app_label": "core", "model": "master" }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 8,
+    "fields": { "app_label": "core", "model": "order" }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 9,
+    "fields": { "app_label": "core", "model": "service" }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 10,
+    "fields": { "app_label": "core", "model": "review" }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 11,
+    "fields": { "app_label": "users", "model": "customuser" }
+  },
+  {
+    "model": "core.order",
+    "pk": 1,
+    "fields": {
+      "name": "Михаил Кузнецов",
+      "phone": "+7 (926) 641-17-94",
+      "comment": "",
+      "status": "canceled",
+      "date_created": "2025-08-18T09:42:38.563Z",
+      "date_updated": "2025-08-18T09:42:38.563Z",
+      "master": 4,
+      "appointment_date": "2025-08-08",
+      "view_count": 0,
+      "services": [2]
+    }
+  },
+  {
+    "model": "core.order",
+    "pk": 2,
+    "fields": {
+      "name": "Иван Иванов",
+      "phone": "+7 (942) 374-65-88",
+      "comment": "",
+      "status": "confirmed",
+      "date_created": "2025-08-18T09:42:38.574Z",
+      "date_updated": "2025-08-18T09:42:38.574Z",
+      "master": 5,
+      "appointment_date": "2025-07-24",
+      "view_count": 0,
+      "services": [3, 6, 7]
+    }
+  },
+  {
+    "model": "core.order",
+    "pk": 3,
+    "fields": {
+      "name": "Андрей Смирнов",
+      "phone": "+7 (988) 403-70-57",
+      "comment": "Тестовый заказ #3",
+      "status": "completed",
+      "date_created": "2025-08-18T09:42:38.586Z",
+      "date_updated": "2025-08-18T09:42:38.586Z",
+      "master": 5,
+      "appointment_date": "2025-07-26",
+      "view_count": 0,
+      "services": [4, 5]
+    }
+  },
+  {
+    "model": "core.order",
+    "pk": 4,
+    "fields": {
+      "name": "Сергей Васильев",
+      "phone": "+7 (978) 517-16-52",
+      "comment": "",
+      "status": "completed",
+      "date_created": "2025-08-18T09:42:38.597Z",
+      "date_updated": "2025-08-18T09:42:38.597Z",
+      "master": 4,
+      "appointment_date": "2025-08-15",
+      "view_count": 0,
+      "services": [1, 2, 7]
+    }
+  },
+  {
+    "model": "core.order",
+    "pk": 5,
+    "fields": {
+      "name": "Андрей Петров",
+      "phone": "+7 (910) 763-67-88",
+      "comment": "",
+      "status": "confirmed",
+      "date_created": "2025-08-18T09:42:38.610Z",
+      "date_updated": "2025-08-18T09:42:38.611Z",
+      "master": 3,
+      "appointment_date": "2025-07-23",
+      "view_count": 0,
+      "services": [7]
+    }
+  },
+  {
+    "model": "core.order",
+    "pk": 6,
+    "fields": {
+      "name": "Дмитрий Васильев",
+      "phone": "+7 (958) 662-41-56",
+      "comment": "",
+      "status": "new",
+      "date_created": "2025-08-18T09:42:38.623Z",
+      "date_updated": "2025-08-18T09:42:38.623Z",
+      "master": 5,
+      "appointment_date": "2025-07-20",
+      "view_count": 0,
+      "services": [2, 5, 7]
+    }
+  },
+  {
+    "model": "core.order",
+    "pk": 7,
+    "fields": {
+      "name": "Михаил Иванов",
+      "phone": "+7 (916) 530-20-89",
+      "comment": "",
+      "status": "completed",
+      "date_created": "2025-08-18T09:42:38.636Z",
+      "date_updated": "2025-08-18T09:42:38.636Z",
+      "master": null,
+      "appointment_date": "2025-08-18",
+      "view_count": 0,
+      "services": [4]
+    }
+  },
+  {
+    "model": "core.order",
+    "pk": 8,
+    "fields": {
+      "name": "Алексей Петров",
+      "phone": "+7 (932) 546-22-95",
+      "comment": "",
+      "status": "new",
+      "date_created": "2025-08-18T09:42:38.646Z",
+      "date_updated": "2025-08-18T09:42:38.646Z",
+      "master": 5,
+      "appointment_date": "2025-08-14",
+      "view_count": 0,
+      "services": [1, 6, 7]
+    }
+  },
+  {
+    "model": "core.order",
+    "pk": 9,
+    "fields": {
+      "name": "Андрей Соколов",
+      "phone": "+7 (943) 856-14-53",
+      "comment": "Тестовый заказ #9",
+      "status": "canceled",
+      "date_created": "2025-08-18T09:42:38.657Z",
+      "date_updated": "2025-08-18T09:42:38.657Z",
+      "master": 2,
+      "appointment_date": "2025-08-13",
+      "view_count": 0,
+      "services": [3]
+    }
+  },
+  {
+    "model": "core.order",
+    "pk": 10,
+    "fields": {
+      "name": "Петр Сидоров",
+      "phone": "+7 (914) 977-80-83",
+      "comment": "Тестовый заказ #10",
+      "status": "completed",
+      "date_created": "2025-08-18T09:42:38.669Z",
+      "date_updated": "2025-08-18T09:42:38.669Z",
+      "master": 2,
+      "appointment_date": "2025-08-12",
+      "view_count": 0,
+      "services": [4, 7]
+    }
+  },
+  {
+    "model": "core.order",
+    "pk": 11,
+    "fields": {
+      "name": "Петр Васильев",
+      "phone": "+7 (969) 229-91-67",
+      "comment": "",
+      "status": "new",
+      "date_created": "2025-08-18T09:42:38.679Z",
+      "date_updated": "2025-08-18T09:42:38.680Z",
+      "master": null,
+      "appointment_date": "2025-07-27",
+      "view_count": 0,
+      "services": [5, 7]
+    }
+  },
+  {
+    "model": "core.order",
+    "pk": 12,
+    "fields": {
+      "name": "Андрей Попов",
+      "phone": "+7 (945) 219-58-86",
+      "comment": "",
+      "status": "canceled",
+      "date_created": "2025-08-18T09:42:38.689Z",
+      "date_updated": "2025-08-18T09:42:38.689Z",
+      "master": 4,
+      "appointment_date": "2025-07-19",
+      "view_count": 0,
+      "services": [3, 6, 7]
+    }
+  },
+  {
+    "model": "core.order",
+    "pk": 13,
+    "fields": {
+      "name": "Иван Васильев",
+      "phone": "+7 (953) 628-84-67",
+      "comment": "",
+      "status": "new",
+      "date_created": "2025-08-18T09:42:38.702Z",
+      "date_updated": "2025-08-18T09:42:38.702Z",
+      "master": 2,
+      "appointment_date": "2025-07-29",
+      "view_count": 0,
+      "services": [5]
+    }
+  },
+  {
+    "model": "core.order",
+    "pk": 14,
+    "fields": {
+      "name": "Алексей Васильев",
+      "phone": "+7 (929) 533-33-45",
+      "comment": "",
+      "status": "new",
+      "date_created": "2025-08-18T09:42:38.713Z",
+      "date_updated": "2025-08-18T09:42:38.713Z",
+      "master": 3,
+      "appointment_date": "2025-08-13",
+      "view_count": 0,
+      "services": [2]
+    }
+  },
+  {
+    "model": "core.order",
+    "pk": 15,
+    "fields": {
+      "name": "Николай Сидоров",
+      "phone": "+7 (935) 502-48-51",
+      "comment": "",
+      "status": "canceled",
+      "date_created": "2025-08-18T09:42:38.723Z",
+      "date_updated": "2025-08-18T09:42:38.723Z",
+      "master": 2,
+      "appointment_date": "2025-07-27",
+      "view_count": 0,
+      "services": [1, 3, 4]
+    }
+  },
+  {
+    "model": "core.order",
+    "pk": 16,
+    "fields": {
+      "name": "Дмитрий Смирнов",
+      "phone": "+7 (992) 475-71-98",
+      "comment": "Тестовый заказ #16",
+      "status": "completed",
+      "date_created": "2025-08-18T09:42:38.737Z",
+      "date_updated": "2025-08-18T09:42:38.737Z",
+      "master": 1,
+      "appointment_date": "2025-08-16",
+      "view_count": 0,
+      "services": [1, 7]
+    }
+  },
+  {
+    "model": "core.order",
+    "pk": 17,
+    "fields": {
+      "name": "Сергей Иванов",
+      "phone": "+7 (940) 145-49-85",
+      "comment": "",
+      "status": "canceled",
+      "date_created": "2025-08-18T09:42:38.749Z",
+      "date_updated": "2025-08-18T09:42:38.749Z",
+      "master": 1,
+      "appointment_date": "2025-08-09",
+      "view_count": 0,
+      "services": [2, 4]
+    }
+  },
+  {
+    "model": "core.order",
+    "pk": 18,
+    "fields": {
+      "name": "Дмитрий Петров",
+      "phone": "+7 (980) 138-23-40",
+      "comment": "",
+      "status": "canceled",
+      "date_created": "2025-08-18T09:42:38.762Z",
+      "date_updated": "2025-08-18T09:42:38.762Z",
+      "master": 2,
+      "appointment_date": "2025-07-27",
+      "view_count": 0,
+      "services": [3]
+    }
+  },
+  {
+    "model": "core.order",
+    "pk": 19,
+    "fields": {
+      "name": "Сергей Смирнов",
+      "phone": "+7 (978) 719-70-25",
+      "comment": "Тестовый заказ #19",
+      "status": "completed",
+      "date_created": "2025-08-18T09:42:38.778Z",
+      "date_updated": "2025-08-18T09:42:38.778Z",
+      "master": 3,
+      "appointment_date": "2025-08-18",
+      "view_count": 0,
+      "services": [1, 3, 5]
+    }
+  },
+  {
+    "model": "core.order",
+    "pk": 20,
+    "fields": {
+      "name": "Михаил Иванов",
+      "phone": "+7 (933) 974-62-55",
+      "comment": "",
+      "status": "canceled",
+      "date_created": "2025-08-18T09:42:38.788Z",
+      "date_updated": "2025-08-18T09:42:38.788Z",
+      "master": null,
+      "appointment_date": "2025-07-21",
+      "view_count": 0,
+      "services": [2, 3, 5]
+    }
+  },
+  {
+    "model": "core.order",
+    "pk": 21,
+    "fields": {
+      "name": "Рон Уизли",
+      "phone": "+79875642459",
+      "comment": "рыжая борода",
+      "status": "new",
+      "date_created": "2025-08-21T09:31:38.431Z",
+      "date_updated": "2025-08-21T09:31:38.431Z",
+      "master": 1,
+      "appointment_date": "2025-08-21",
+      "view_count": 3,
+      "services": [1, 4]
+    }
+  },
+  {
+    "model": "core.order",
+    "pk": 22,
+    "fields": {
+      "name": "Гном",
+      "phone": "+79856743563",
+      "comment": "борода",
+      "status": "new",
+      "date_created": "2025-08-21T13:28:17.570Z",
+      "date_updated": "2025-08-21T13:28:17.570Z",
+      "master": 3,
+      "appointment_date": "2025-08-21",
+      "view_count": 1,
+      "services": [3, 4]
+    }
+  },
+  {
+    "model": "core.order",
+    "pk": 23,
+    "fields": {
+      "name": "Имя",
+      "phone": "+79774654328",
+      "comment": "ага",
+      "status": "new",
+      "date_created": "2025-08-29T11:49:34.697Z",
+      "date_updated": "2025-08-29T11:49:34.697Z",
+      "master": 5,
+      "appointment_date": "2025-08-29",
+      "view_count": 0,
+      "services": [7]
+    }
+  },
+  {
+    "model": "core.master",
+    "pk": 1,
+    "fields": {
+      "name": "Эльдар \"Бритва\" Рязанов",
+      "photo": "",
+      "phone": "+7 (999) 123-45-67",
+      "address": null,
+      "experience": 8,
+      "is_active": true,
+      "services": [1, 2, 3, 4, 5, 6]
+    }
+  },
+  {
+    "model": "core.master",
+    "pk": 2,
+    "fields": {
+      "name": "Зоя \"Ножницы\" Космодемьянская",
+      "photo": "",
+      "phone": "+7 (999) 234-56-78",
+      "address": null,
+      "experience": 5,
+      "is_active": true,
+      "services": [1, 2, 3, 4, 5, 6, 7]
+    }
+  },
+  {
+    "model": "core.master",
+    "pk": 3,
+    "fields": {
+      "name": "Борис \"Фен\" Пастернак",
+      "photo": "",
+      "phone": "+7 (999) 345-67-89",
+      "address": null,
+      "experience": 12,
+      "is_active": true,
+      "services": [2, 3, 4, 6, 7]
+    }
+  },
+  {
+    "model": "core.master",
+    "pk": 4,
+    "fields": {
+      "name": "Иннокентий \"Лак\" Смоктуновский",
+      "photo": "",
+      "phone": "+7 (999) 456-78-90",
+      "address": null,
+      "experience": 3,
+      "is_active": true,
+      "services": [4, 5, 6]
+    }
+  },
+  {
+    "model": "core.master",
+    "pk": 5,
+    "fields": {
+      "name": "Раиса \"Бигуди\" Горбачёва",
+      "photo": "",
+      "phone": "+7 (999) 567-89-01",
+      "address": null,
+      "experience": 7,
+      "is_active": false,
+      "services": [1, 2, 4, 5, 6, 7]
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 1,
+    "fields": {
+      "name": "Мужская стрижка",
+      "description": "Классическая мужская стрижка с укладкой",
+      "price": "1500.00",
+      "duration": 45,
+      "is_popular": true,
+      "image": ""
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 2,
+    "fields": {
+      "name": "Стрижка машинкой",
+      "description": "Быстрая стрижка машинкой под одну длину",
+      "price": "800.00",
+      "duration": 20,
+      "is_popular": false,
+      "image": ""
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 3,
+    "fields": {
+      "name": "Бритье бороды",
+      "description": "Классическое бритье опасной бритвой с распариванием",
+      "price": "1200.00",
+      "duration": 30,
+      "is_popular": true,
+      "image": ""
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 4,
+    "fields": {
+      "name": "Стрижка бороды",
+      "description": "Моделирование и стрижка бороды",
+      "price": "900.00",
+      "duration": 25,
+      "is_popular": true,
+      "image": ""
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 5,
+    "fields": {
+      "name": "Детская стрижка",
+      "description": "Стрижка для мальчиков до 12 лет",
+      "price": "1000.00",
+      "duration": 30,
+      "is_popular": false,
+      "image": ""
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 6,
+    "fields": {
+      "name": "Укладка",
+      "description": "Укладка волос с использованием профессиональных средств",
+      "price": "700.00",
+      "duration": 15,
+      "is_popular": false,
+      "image": ""
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 7,
+    "fields": {
+      "name": "Комплекс (стрижка + борода)",
+      "description": "Комплексная услуга: стрижка волос и оформление бороды",
+      "price": "2200.00",
+      "duration": 60,
+      "is_popular": true,
+      "image": ""
+    }
+  },
+  {
+    "model": "core.review",
+    "pk": 1,
+    "fields": {
+      "name": "Евгений",
+      "text": "Мастер учел все мои пожелания, результат отличный.",
+      "rating": 4,
+      "master": 1,
+      "photo": "",
+      "status": "new",
+      "created_at": "2025-08-18T09:42:38.800Z"
+    }
+  },
+  {
+    "model": "core.review",
+    "pk": 2,
+    "fields": {
+      "name": "Максим B",
+      "text": "Супер! Лучшая стрижка в моей жизни!",
+      "rating": 4,
+      "master": 1,
+      "photo": "",
+      "status": "new",
+      "created_at": "2025-08-18T09:42:38.806Z"
+    }
+  },
+  {
+    "model": "core.review",
+    "pk": 3,
+    "fields": {
+      "name": "Евгений C",
+      "text": "Не совсем то, что я ожидал, но в целом неплохо.",
+      "rating": 4,
+      "master": 1,
+      "photo": "",
+      "status": "new",
+      "created_at": "2025-08-18T09:42:38.812Z"
+    }
+  },
+  {
+    "model": "core.review",
+    "pk": 4,
+    "fields": {
+      "name": "Владимир D",
+      "text": "Быстро и качественно. Спасибо!",
+      "rating": 4,
+      "master": 1,
+      "photo": "",
+      "status": "new",
+      "created_at": "2025-08-18T09:42:38.818Z"
+    }
+  },
+  {
+    "model": "core.review",
+    "pk": 5,
+    "fields": {
+      "name": "Евгений E",
+      "text": "Не совсем то, что я ожидал, но в целом неплохо.",
+      "rating": 3,
+      "master": 1,
+      "photo": "",
+      "status": "new",
+      "created_at": "2025-08-18T09:42:38.823Z"
+    }
+  },
+  {
+    "model": "core.review",
+    "pk": 6,
+    "fields": {
+      "name": "Владимир A",
+      "text": "Отличный мастер! Очень доволен стрижкой.",
+      "rating": 4,
+      "master": 2,
+      "photo": "",
+      "status": "new",
+      "created_at": "2025-08-18T09:42:38.829Z"
+    }
+  },
+  {
+    "model": "core.review",
+    "pk": 7,
+    "fields": {
+      "name": "Артем B",
+      "text": "Мастер учел все мои пожелания, результат отличный.",
+      "rating": 3,
+      "master": 2,
+      "photo": "",
+      "status": "new",
+      "created_at": "2025-08-18T09:42:38.835Z"
+    }
+  },
+  {
+    "model": "core.review",
+    "pk": 8,
+    "fields": {
+      "name": "Александр C",
+      "text": "Мастер учел все мои пожелания, результат отличный.",
+      "rating": 5,
+      "master": 2,
+      "photo": "",
+      "status": "new",
+      "created_at": "2025-08-18T09:42:38.840Z"
+    }
+  },
+  {
+    "model": "core.review",
+    "pk": 9,
+    "fields": {
+      "name": "Гость",
+      "text": "Хорошее обслуживание, но немного дороговато.",
+      "rating": 5,
+      "master": 2,
+      "photo": "",
+      "status": "new",
+      "created_at": "2025-08-18T09:42:38.846Z"
+    }
+  },
+  {
+    "model": "core.review",
+    "pk": 10,
+    "fields": {
+      "name": "Максим",
+      "text": "Приятная атмосфера и профессиональный подход.",
+      "rating": 4,
+      "master": 3,
+      "photo": "",
+      "status": "new",
+      "created_at": "2025-08-18T09:42:38.852Z"
+    }
+  },
+  {
+    "model": "core.review",
+    "pk": 11,
+    "fields": {
+      "name": "Александр",
+      "text": "Всё понравилось, приду ещё раз.",
+      "rating": 4,
+      "master": 3,
+      "photo": "",
+      "status": "new",
+      "created_at": "2025-08-18T09:42:38.857Z"
+    }
+  },
+  {
+    "model": "core.review",
+    "pk": 12,
+    "fields": {
+      "name": "Артем C",
+      "text": "Быстро и качественно. Спасибо!",
+      "rating": 3,
+      "master": 3,
+      "photo": "",
+      "status": "new",
+      "created_at": "2025-08-18T09:42:38.863Z"
+    }
+  },
+  {
+    "model": "core.review",
+    "pk": 13,
+    "fields": {
+      "name": "Посетитель D",
+      "text": "Мастер учел все мои пожелания, результат отличный.",
+      "rating": 4,
+      "master": 3,
+      "photo": "",
+      "status": "new",
+      "created_at": "2025-08-18T09:42:38.869Z"
+    }
+  },
+  {
+    "model": "core.review",
+    "pk": 14,
+    "fields": {
+      "name": "Артем",
+      "text": "Супер! Лучшая стрижка в моей жизни!",
+      "rating": 3,
+      "master": 4,
+      "photo": "",
+      "status": "new",
+      "created_at": "2025-08-18T09:42:38.875Z"
+    }
+  },
+  {
+    "model": "core.review",
+    "pk": 15,
+    "fields": {
+      "name": "Евгений B",
+      "text": "Всё понравилось, приду ещё раз.",
+      "rating": 4,
+      "master": 4,
+      "photo": "",
+      "status": "new",
+      "created_at": "2025-08-18T09:42:38.881Z"
+    }
+  },
+  {
+    "model": "core.review",
+    "pk": 16,
+    "fields": {
+      "name": "Максим C",
+      "text": "Всё понравилось, приду ещё раз.",
+      "rating": 4,
+      "master": 4,
+      "photo": "",
+      "status": "new",
+      "created_at": "2025-08-18T09:42:38.889Z"
+    }
+  },
+  {
+    "model": "core.review",
+    "pk": 17,
+    "fields": {
+      "name": "Гость A",
+      "text": "Отличный мастер! Очень доволен стрижкой.",
+      "rating": 3,
+      "master": 5,
+      "photo": "",
+      "status": "new",
+      "created_at": "2025-08-18T09:42:38.896Z"
+    }
+  },
+  {
+    "model": "core.review",
+    "pk": 18,
+    "fields": {
+      "name": "Александр B",
+      "text": "Не совсем то, что я ожидал, но в целом неплохо.",
+      "rating": 5,
+      "master": 5,
+      "photo": "",
+      "status": "new",
+      "created_at": "2025-08-18T09:42:38.903Z"
+    }
+  },
+  {
+    "model": "core.review",
+    "pk": 19,
+    "fields": {
+      "name": "Саша",
+      "text": "Подстригли хорошо",
+      "rating": 5,
+      "master": 1,
+      "photo": "",
+      "status": "publi",
+      "created_at": "2025-08-18T10:07:10.994Z"
+    }
+  },
+  {
+    "model": "core.review",
+    "pk": 20,
+    "fields": {
+      "name": "Anonim",
+      "text": "чтобы вы сдохли!",
+      "rating": 1,
+      "master": 2,
+      "photo": "",
+      "status": "ai_rejected",
+      "created_at": "2025-08-18T12:39:01.386Z"
+    }
+  },
+  {
+    "model": "core.review",
+    "pk": 21,
+    "fields": {
+      "name": "Гномыч",
+      "text": "такое себе",
+      "rating": 5,
+      "master": 5,
+      "photo": "",
+      "status": "ai_approved",
+      "created_at": "2025-08-21T13:33:20.861Z"
+    }
+  },
+  {
+    "model": "core.review",
+    "pk": 22,
+    "fields": {
+      "name": "Имя",
+      "text": "спасибооооо",
+      "rating": 5,
+      "master": 5,
+      "photo": "",
+      "status": "ai_approved",
+      "created_at": "2025-08-29T11:51:16.709Z"
+    }
+  },
+  {
+    "model": "users.customuser",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$1000000$dQDqNOwsNhTqh9PNY89rMC$XbPX+t3w5+75dR/dOcB6IoV3qsRsbYXT7Z365xTsIE8=",
+      "last_login": "2025-09-11T09:40:09.418Z",
+      "is_superuser": true,
+      "username": "admin",
+      "first_name": "",
+      "last_name": "",
+      "email": "semenb668@gmail.com",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2025-09-11T09:38:15.197Z",
+      "avatar": "",
+      "phone": null,
+      "birthday": null,
+      "vk_id": null,
+      "tg_id": null,
+      "groups": [],
+      "user_permissions": []
+    }
+  }
+]
