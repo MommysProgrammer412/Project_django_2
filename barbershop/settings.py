@@ -1,4 +1,5 @@
 from pathlib import Path
+from django.conf.global_settings import CSRF_TRUSTED_ORIGINS
 from dotenv import load_dotenv
 import os
 from django.urls import reverse_lazy
@@ -19,7 +20,9 @@ MISTRAL_API_KEY = os.getenv("MISTRAL_API_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG_MODE", "True") == "True"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+
+CSRF_TRUSTED_ORIGINS = ['http://*', 'https://*']
 
 
 # Application definition
