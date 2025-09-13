@@ -34,14 +34,14 @@ urlpatterns = [
 
     # AJAX вью для отдачи массива объектов услуг по ID мастера
     path("ajax/services/<int:master_id>/", AjaxMasterServicesView.as_view(), name="get_services_by_master"),
-    path('users/', include('users.urls')),
+
+    # Подключаем маршруты приложения users
+    path("users/", include("users.urls")),
 ]
 
 # Добавляем Статику и Медиа ЕСЛИ в режиме разработки
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    urlpatterns += static(
-        settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0]
-    )
-    # Подключим Django Debug  Toolbar
+    # Статика обрабатывается автоматически при DEBUG=True; ручная маршрутизация не требуется
+    # Подключим Django Debug Toolbar
     urlpatterns += debug_toolbar_urls()
